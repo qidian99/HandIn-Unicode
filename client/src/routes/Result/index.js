@@ -20,6 +20,7 @@ class Result extends Component {
             toWelcome: false,
             newSearch: null,
             poorResult: false,
+            feedbackError: "",
         };
 
         this.allImages = []
@@ -112,6 +113,7 @@ class Result extends Component {
         LOG('pic per row: ' + picPerRow);
         LOG('pic per col: ' + picPerCol);
         this.numImagesToAdd = picPerRow * picPerCol;
+        this.displayMoreImages();
     }
 
     handleScroll() {
@@ -152,9 +154,14 @@ class Result extends Component {
 
     handleSubmitFeedback() {
         const feedback = document.getElementById('feedback').value;
-        submitFeedback(feedback);
-        this.hidePopup();
-        //TODO: show thank you snackbar or popup
+        submitFeedback(feedback.trim()).then(result => {
+            this.hidePopup();
+            //TODO: show thank you snackbar or popup
+        }).catch(error => {
+            this.setState({
+                feedbackError: error,
+            })
+        });
     }
 
     hidePopup() {
@@ -172,6 +179,7 @@ class Result extends Component {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body className={styles.modalBody}>
+                        <p className={styles.error}>{this.state.feedbackError.message}</p>
                         <input className={styles.modalInput} placeholder="请使用逗号分隔关键词"
                                type="text" id="feedback" onKeyPress={this.keyPressed}/>
                     </Modal.Body>
@@ -216,7 +224,7 @@ class Result extends Component {
                                 }
                                 return (
                                     <div className={styles.image} key={image.id}>
-                                        <img src={image.fullUrl} style={{height: height + '%', width: width + '%'}}
+                                        <img src={image.media_url} style={{height: height + '%', width: width + '%'}}
                                              alt='none'/>
                                         <div className={styles.frame}/>
                                     </div>
