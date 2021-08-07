@@ -1,0 +1,12 @@
+.git/**/*
+.git
+
+raw/**/*
+
+.idea/**/*
+.idea
+
+build/**/*
+build
+
+gradle/
