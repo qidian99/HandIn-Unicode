@@ -35,9 +35,11 @@ out/
 volumes/
 
 ### local raw images ###
-raw/*
+data/raw/*
+data/processed/*
 
 /bin/main/com/*
 /bin/test/*
 
 .DS_Store
+*.log

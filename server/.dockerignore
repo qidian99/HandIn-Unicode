@@ -1,12 +1,16 @@
-.git/**/*
-.git
+.git/
+data/
+.idea/
+build/
+.gradle/
 
-raw/**/*
+*.md
+*.txt
+Dockerfile
+docker-compose.yml
+.gitignore
+init-mongo.js
+monstache.config.toml
 
-.idea/**/*
-.idea
-
-build/**/*
-build
-
-gradle/
+# whitelist
+!scripts/init-boot.sh

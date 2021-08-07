@@ -18,11 +18,16 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 
 @Service
 public class SequenceGeneratorService {
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
 
     @Autowired
     public SequenceGeneratorService(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
+    }
+
+    public long getCurrentSequence(String seqName) {
+        DatabaseSequence counter = mongoOperations.findById(seqName, DatabaseSequence.class);
+        return !Objects.isNull(counter) ? counter.getSeq() : 0;
     }
 
     public long generateSequence(String seqName) {
